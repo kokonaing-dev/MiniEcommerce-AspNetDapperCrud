@@ -4,7 +4,7 @@ using ECommerceApp.Repositories;
 
 namespace ECommerceApp.Services;
 
-public class ProductService
+public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
 
@@ -13,9 +13,10 @@ public class ProductService
         _productRepository = productRepository;
     }
 
-    public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
+    public async Task<List<ProductDto>> GetAllProductsAsync()
     {
-        return await _productRepository.GetAllAsync();
+        var products =  await _productRepository.GetAllAsync();
+        return products.ToList();
     }
 
     public async Task<bool> CreateProductAsync(ProductDto dto)
@@ -33,7 +34,7 @@ public class ProductService
         if (result > 0) return true;
 
         return false;
-        
+
     }
 
     public async Task<bool> UpdateProductAsync(ProductDto dto)
