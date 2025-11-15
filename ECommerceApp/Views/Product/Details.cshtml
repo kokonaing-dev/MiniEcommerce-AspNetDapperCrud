@@ -1,0 +1,14 @@
+﻿@model ECommerceApp.DTOs.ProductDto
+
+<h2>Product Details</h2>
+
+<p><strong>Name:</strong> @Model.Name</p>
+<p><strong>Description:</strong> @Model.Description</p>
+<p><strong>Price:</strong> @Model.Price</p>
+<p><strong>Category:</strong> @Model.CategoryName</p>
+
+<img src="@Model.ImageUrl" width="150" />
+
+<br />
+<br />
+<a href="/Product/Index" class="btn btn-primary">Back</a>
