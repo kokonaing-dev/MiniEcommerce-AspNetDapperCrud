@@ -4,7 +4,7 @@ using ECommerceApp.Repositories;
 
 namespace ECommerceApp.Services;
 
-public class CategoryService
+public class CategoryService : ICategoryService
 {
     private readonly ICategoryRepository _categoryRepository;
 
@@ -28,7 +28,7 @@ public class CategoryService
         };
 
         return await _categoryRepository.CreateAsync(category);
-        
+
     }
 
     public async Task<bool> UpdateCategoryAsync(CategoryDto dto)
@@ -39,7 +39,7 @@ public class CategoryService
         };
 
         return await _categoryRepository.UpdateAsync(category);
-       
+
     }
 
     public async Task<CategoryDto?> CategoryDetailAsync(int id)

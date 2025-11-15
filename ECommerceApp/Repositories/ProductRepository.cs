@@ -17,10 +17,12 @@ public class ProductRepository : IProductRepository
     public async Task<IEnumerable<ProductDto>> GetAllAsync()
     {
         var sql = @"
-            SELECT p.Id, p.Name, p.Description, p.Price, p.ImageUrl, 
-                   p.CategoryId, c.Name AS CategoryName, p.CreatedDate AS Created
-            FROM Products p
-            INNER JOIN Categories c ON p.CategoryId = c.Id";
+        SELECT p.Id, p.Name, p.Description, p.Price, p.ImageUrl, 
+               p.CategoryId, c.Name AS CategoryName, 
+               p.CreatedDate AS Created
+        FROM Products p
+        INNER JOIN Categories c ON p.CategoryId = c.Id
+        WHERE p.IsDeleted = 0";
 
         using var connection = _context.CreateConnection();
         return await connection.QueryAsync<ProductDto>(sql);
@@ -29,30 +31,32 @@ public class ProductRepository : IProductRepository
     public async Task<ProductDto?> GetByIdAsync(int id)
     {
         var sql = @"
-            SELECT p.Id, p.Name, p.Description, p.Price, p.ImageUrl, 
-                   p.CategoryId, c.Name AS CategoryName, p.CreatedDate AS Created,
-                   p.UpdatedDate AS Updated,
-            FROM Products p
-            INNER JOIN Categories c ON p.CategoryId = c.Id
-            WHERE p.Id = @Id AND p.IsDeleted = 0";
+        SELECT p.Id, p.Name, p.Description, p.Price, p.ImageUrl, 
+               p.CategoryId, c.Name AS CategoryName, 
+               p.CreatedDate AS Created,
+               p.UpdatedDate AS Updated
+        FROM Products p
+        INNER JOIN Categories c ON p.CategoryId = c.Id
+        WHERE p.Id = @Id AND p.IsDeleted = 0";
 
         using var connection = _context.CreateConnection();
         return await connection.QueryFirstOrDefaultAsync<ProductDto>(sql, new { Id = id });
     }
 
-    public async Task<int> CreateAsync(Product product)
+    public async Task<bool> CreateAsync(Product product)
     {
-        
         product.CreatedDate = DateTime.UtcNow;
         product.IsDeleted = false;
 
         var sql = @"
         INSERT INTO Products (Name, Description, Price, ImageUrl, CategoryId, CreatedDate, IsDeleted)
         VALUES (@Name, @Description, @Price, @ImageUrl, @CategoryId, @CreatedDate, @IsDeleted);
-        SELECT CAST(SCOPE_IDENTITY() AS int);";
+    ";
 
         using var connection = _context.CreateConnection();
-        return await connection.ExecuteScalarAsync<int>(sql, product);
+        var rows = await connection.ExecuteAsync(sql, product);
+
+        return rows > 0; 
     }
 
     public async Task<bool> UpdateAsync(Product product)

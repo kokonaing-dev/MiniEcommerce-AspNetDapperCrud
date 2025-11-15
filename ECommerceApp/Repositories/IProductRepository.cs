@@ -5,7 +5,7 @@ namespace ECommerceApp.Repositories;
 
 public interface IProductRepository
 {
-    Task<int> CreateAsync(Product product);
+    Task<bool> CreateAsync(Product product);
     Task<bool> DeleteAsync(int id);
     Task<IEnumerable<ProductDto>> GetAllAsync();
     Task<ProductDto?> GetByIdAsync(int id);

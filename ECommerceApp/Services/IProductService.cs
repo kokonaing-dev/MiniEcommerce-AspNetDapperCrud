@@ -1,13 +1,12 @@
 ﻿using ECommerceApp.DTOs;
 
-namespace ECommerceApp.Services
+namespace ECommerceApp.Services;
+
+public interface IProductService
 {
-    public interface IProductService
-    {
-        Task<bool> CreateProductAsync(ProductDto dto);
-        Task<bool> DeleteProductAsync(int id);
-        Task<List<ProductDto>> GetAllProductsAsync();
-        Task<ProductDto> ProdcutDetailAsync(int id);
-        Task<bool> UpdateProductAsync(ProductDto dto);
-    }
+    Task<bool> CreateProductAsync(CreateProductDto dto);
+    Task<bool> UpdateProductAsync(int id, UpdateProductDto dto);
+    Task<bool> DeleteProductAsync(int id);
+    Task<List<ProductDto>> GetAllProductsAsync();
+    Task<ProductDto?> ProductDetailAsync(int id);
 }

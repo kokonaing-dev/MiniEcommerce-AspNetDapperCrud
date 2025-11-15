@@ -6,20 +6,24 @@ namespace ECommerceApp.Services;
 
 public class ProductService : IProductService
 {
-    private readonly IProductRepository _productRepository;
+    private readonly IProductRepository _repo;
 
-    public ProductService(IProductRepository productRepository)
+    public ProductService(IProductRepository repo)
     {
-        _productRepository = productRepository;
+        _repo = repo;
     }
 
     public async Task<List<ProductDto>> GetAllProductsAsync()
     {
-        var products =  await _productRepository.GetAllAsync();
-        return products.ToList();
+        var data = await _repo.GetAllAsync();
+        return data.ToList();
     }
 
-    public async Task<bool> CreateProductAsync(ProductDto dto)
+
+    public Task<ProductDto?> ProductDetailAsync(int id)
+        => _repo.GetByIdAsync(id);
+
+    public Task<bool> CreateProductAsync(CreateProductDto dto)
     {
         var entity = new Product
         {
@@ -27,40 +31,30 @@ public class ProductService : IProductService
             Description = dto.Description,
             Price = dto.Price,
             ImageUrl = dto.ImageUrl,
-            CategoryId = dto.CategoryId
+            CategoryId = dto.CategoryId,
+            CreatedDate = DateTime.UtcNow
         };
 
-        int result = await _productRepository.CreateAsync(entity);
-        if (result > 0) return true;
-
-        return false;
-
+        return _repo.CreateAsync(entity);
     }
 
-    public async Task<bool> UpdateProductAsync(ProductDto dto)
+    public Task<bool> UpdateProductAsync(int id, UpdateProductDto dto)
     {
         var entity = new Product
         {
-            Id = dto.Id,
+            Id = id,
             Name = dto.Name,
             Description = dto.Description,
             Price = dto.Price,
             ImageUrl = dto.ImageUrl,
-            CategoryId = dto.CategoryId
+            CategoryId = dto.CategoryId,
+            UpdatedDate = DateTime.UtcNow
         };
 
-        return await _productRepository.UpdateAsync(entity);
+        return _repo.UpdateAsync(entity);
     }
 
-    public async Task<ProductDto> ProdcutDetailAsync(int id)
-    {
-        var product = await _productRepository.GetByIdAsync(id);
-
-        return product ?? new ProductDto();
-    }
-
-    public async Task<bool> DeleteProductAsync(int id)
-    {
-        return await _productRepository.DeleteAsync(id);
-    }
+    public Task<bool> DeleteProductAsync(int id)
+        => _repo.DeleteAsync(id);
 }
+
