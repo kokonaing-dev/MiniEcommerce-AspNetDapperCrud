@@ -16,14 +16,14 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<IEnumerable<CategoryDto>> GetAllAsync()
     {
-        var sql = "SELECT * FROM Categories";
+        var sql = "SELECT * FROM Category WHERE IsDeleted = 0";
         using var connection = _context.CreateConnection();
         return await connection.QueryAsync<CategoryDto>(sql);
     }
 
     public async Task<CategoryDto?> GetByIdAsync(int id)
     {
-        var sql = "SELECT * FROM Categories WHERE Id = @Id";
+        var sql = "SELECT * FROM Category WHERE Id = @Id";
         using var connection = _context.CreateConnection();
         return await connection.QueryFirstOrDefaultAsync<CategoryDto>(sql, new { Id = id });
     }
@@ -33,7 +33,7 @@ public class CategoryRepository : ICategoryRepository
         category.IsDeleted = false;
         category.CreatedDate = DateTime.UtcNow;
 
-        var sql = "INSERT INTO Categories (Name,IsDeleted,CreatedDate) VALUES (@Name,@IsDeleted,@CreatedDate)";
+        var sql = "INSERT INTO Category (Name,IsDeleted,CreatedDate) VALUES (@Name,@IsDeleted,@CreatedDate)";
         using var connection = _context.CreateConnection();
         var rows = await connection.ExecuteAsync(sql, category);
         return rows > 0;
@@ -43,7 +43,7 @@ public class CategoryRepository : ICategoryRepository
     {
         category.UpdatedDate = DateTime.UtcNow;
 
-        var sql = "UPDATE Categories SET Name = @Name, UpdatedDate = @UpdatedDate WHERE Id = @Id";
+        var sql = "UPDATE Category SET Name = @Name, UpdatedDate = @UpdatedDate WHERE Id = @Id";
         using var connection = _context.CreateConnection();
         var rows = await connection.ExecuteAsync(sql, category);
         return rows > 0;
@@ -51,7 +51,7 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<bool> DeleteAsync(int id)
     {
-        var sql = "UPDATE Categories SET IsDeleted = 0 WHERE Id = @Id";
+        var sql = "UPDATE Category SET IsDeleted = 1 WHERE Id = @Id";
         using var connection = _context.CreateConnection();
         var rows = await connection.ExecuteAsync(sql, new { Id = id });
         return rows > 0;

@@ -20,8 +20,8 @@ public class ProductRepository : IProductRepository
         SELECT p.Id, p.Name, p.Description, p.Price, p.ImageUrl, 
                p.CategoryId, c.Name AS CategoryName, 
                p.CreatedDate AS Created
-        FROM Products p
-        INNER JOIN Categories c ON p.CategoryId = c.Id
+        FROM Product p
+        INNER JOIN Category c ON p.CategoryId = c.Id
         WHERE p.IsDeleted = 0";
 
         using var connection = _context.CreateConnection();
@@ -35,8 +35,8 @@ public class ProductRepository : IProductRepository
                p.CategoryId, c.Name AS CategoryName, 
                p.CreatedDate AS Created,
                p.UpdatedDate AS Updated
-        FROM Products p
-        INNER JOIN Categories c ON p.CategoryId = c.Id
+        FROM Product p
+        INNER JOIN Category c ON p.CategoryId = c.Id
         WHERE p.Id = @Id AND p.IsDeleted = 0";
 
         using var connection = _context.CreateConnection();
@@ -49,7 +49,7 @@ public class ProductRepository : IProductRepository
         product.IsDeleted = false;
 
         var sql = @"
-        INSERT INTO Products (Name, Description, Price, ImageUrl, CategoryId, CreatedDate, IsDeleted)
+        INSERT INTO Product (Name, Description, Price, ImageUrl, CategoryId, CreatedDate, IsDeleted)
         VALUES (@Name, @Description, @Price, @ImageUrl, @CategoryId, @CreatedDate, @IsDeleted);
     ";
 
@@ -64,7 +64,7 @@ public class ProductRepository : IProductRepository
         product.UpdatedDate = DateTime.UtcNow;
 
         var sql = @"
-        UPDATE Products
+        UPDATE Product
         SET Name = @Name,
             Description = @Description,
             Price = @Price,
@@ -80,7 +80,7 @@ public class ProductRepository : IProductRepository
 
     public async Task<bool> DeleteAsync(int id)
     {
-        var sql = @"UPDATE Products SET IsDeleted = 1  WHERE Id = @Id";
+        var sql = @"UPDATE Product SET IsDeleted = 1  WHERE Id = @Id";
 
         using var connection = _context.CreateConnection();
         var rows = await connection.ExecuteAsync(sql, new { Id = id });

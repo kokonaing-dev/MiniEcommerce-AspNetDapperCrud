@@ -1,0 +1,10 @@
+﻿@model ECommerceApp.DTOs.CategoryDto
+
+<h2>Delete Category</h2>
+
+<p>Are you sure you want to delete <strong>@Model.Name</strong>?</p>
+
+<form method="post">
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a class="btn btn-secondary" href="/Category/Index">Cancel</a>
+</form>

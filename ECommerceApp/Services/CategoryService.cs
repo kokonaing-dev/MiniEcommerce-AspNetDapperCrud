@@ -20,7 +20,7 @@ public class CategoryService : ICategoryService
         return categories.ToList();
     }
 
-    public async Task<bool> CreateCategoryAsync(CategoryDto dto)
+    public async Task<bool> CreateCategoryAsync(CreateCategoryDto dto)
     {
         var category = new Category
         {
@@ -31,10 +31,11 @@ public class CategoryService : ICategoryService
 
     }
 
-    public async Task<bool> UpdateCategoryAsync(CategoryDto dto)
+    public async Task<bool> UpdateCategoryAsync(int id,UpdateCategoryDto dto)
     {
         var category = new Category
         {
+            Id = id,
             Name = dto.Name,
         };
 
