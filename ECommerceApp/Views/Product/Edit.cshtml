@@ -2,29 +2,38 @@
 
 <h2>Edit Product</h2>
 
-<form method="post">
+<div class="d-flex justify-content-end mb-3">
+    <a class="btn btn-secondary" href="/Product">
+        <i class="bi bi-arrow-left-circle"></i> Back
+    </a>
+</div>
 
-    <div class="form-group">
-        <label>Name</label>
+<form method="post" class="card p-4 shadow-sm">
+
+    <div class="form-group mb-3">
+        <label class="form-label">Name</label>
         <input asp-for="Name" class="form-control" />
     </div>
 
-    <div class="form-group">
-        <label>Description</label>
+    <div class="form-group mb-3">
+        <label class="form-label">Description</label>
         <textarea asp-for="Description" class="form-control"></textarea>
     </div>
 
-    <div class="form-group">
-        <label>Price</label>
+    <div class="form-group mb-3">
+        <label class="form-label">Price</label>
         <input asp-for="Price" class="form-control" />
     </div>
 
-    <div class="form-group">
-        <label>Category</label>
+    <div class="form-group mb-3">
+        <label class="form-label">Category</label>
         <select asp-for="CategoryId" class="form-control"
                 asp-items="@(new SelectList(ViewBag.Categories, "Id", "Name"))">
         </select>
     </div>
 
-    <button type="submit" class="btn btn-warning mt-3">Update</button>
+    <button type="submit" class="btn btn-warning">
+        <i class="bi bi-save"></i> Update
+    </button>
+
 </form>

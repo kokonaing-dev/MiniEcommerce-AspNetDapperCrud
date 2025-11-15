@@ -8,6 +8,7 @@ public class ProductDto
     public decimal Price { get; set; }
     public int CategoryId { get; set; }
     public string CategoryName { get; set; } = string.Empty;
+    public DateTime CreatedDate { get; set; }
 }
 
 public class CreateProductDto

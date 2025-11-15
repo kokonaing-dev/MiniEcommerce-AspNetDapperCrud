@@ -2,11 +2,26 @@
 
 <h2>Product Details</h2>
 
-<p><strong>Name:</strong> @Model.Name</p>
-<p><strong>Description:</strong> @Model.Description</p>
-<p><strong>Price:</strong> @Model.Price</p>
-<p><strong>Category:</strong> @Model.CategoryName</p>
+<div class="d-flex justify-content-end mb-3">
+    <a href="/Product" class="btn btn-secondary">
+        <i class="bi bi-arrow-left-circle"></i> Back
+    </a>
+</div>
 
-<br />
-<br />
-<a href="/Product/Index" class="btn btn-primary">Back</a>
+<div class="card shadow-sm p-4">
+    <h4 class="mb-3">@Model.Name</h4>
+
+    <p><strong>Description:</strong> @Model.Description</p>
+    <p><strong>Category:</strong> @Model.CategoryName</p>
+    <p><strong>Price:</strong> $@Model.Price</p>
+
+    <div class="mt-4 d-flex gap-2">
+        <a href="/Product/Edit/@Model.Id" class="btn btn-warning">
+            <i class="bi bi-pencil-square"></i> Edit
+        </a>
+
+        <a href="/Product/Delete/@Model.Id" class="btn btn-danger">
+            <i class="bi bi-trash"></i> Delete
+        </a>
+    </div>
+</div>

@@ -2,30 +2,54 @@
 
 <h2>Products</h2>
 
-<a class="btn btn-primary" href="/Product/Create">Create Product</a>
+<div class="d-flex justify-content-end mb-3">
+    <a class="btn btn-primary" href="/Product/Create">
+        <i class="bi bi-plus-circle"></i> Add Product
+    </a>
+</div>
+
+@{
+    int sn = 1;
+}
 
 <table class="table table-bordered mt-3">
     <thead>
         <tr>
+            <th>SN</th>
             <th>Name</th>
             <th>Category</th>
+            <th>Description</th>
             <th>Price</th>
-            <th></th>
+            <th>Created</th>
+            <th style="width:150px;">Action</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
+                <td>@sn</td>
                 <td>@item.Name</td>
                 <td>@item.CategoryName</td>
+                <td>@item.Description</td>
                 <td>@item.Price</td>
+                <td>@item.CreatedDate.ToString("yyyy-MM-dd HH:mm")</td>
                 <td>
-                    <a class="btn btn-info" href="/Product/Details/@item.Id">Details</a>
-                    <a class="btn btn-warning" href="/Product/Edit/@item.Id">Edit</a>
-                    <a class="btn btn-danger" href="/Product/Delete/@item.Id">Delete</a>
+                    <a class="btn btn-outline-primary btn-sm" href="/Product/Details/@item.Id" title="Details">
+                        <i class="bi bi-eye-fill"></i>
+                    </a>
+
+                    <a class="btn btn-outline-warning btn-sm" href="/Product/Edit/@item.Id" title="Edit">
+                        <i class="bi bi-pencil-fill"></i>
+                    </a>
+
+                    <a class="btn btn-outline-danger btn-sm" href="/Product/Delete/@item.Id" title="Delete">
+                        <i class="bi bi-trash-fill"></i>
+                    </a>
                 </td>
             </tr>
+
+            sn++;
         }
     </tbody>
 </table>
