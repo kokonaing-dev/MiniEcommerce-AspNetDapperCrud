@@ -30,7 +30,6 @@ public class ProductService : IProductService
             Name = dto.Name,
             Description = dto.Description,
             Price = dto.Price,
-            ImageUrl = dto.ImageUrl,
             CategoryId = dto.CategoryId,
             CreatedDate = DateTime.UtcNow
         };
@@ -46,7 +45,6 @@ public class ProductService : IProductService
             Name = dto.Name,
             Description = dto.Description,
             Price = dto.Price,
-            ImageUrl = dto.ImageUrl,
             CategoryId = dto.CategoryId,
             UpdatedDate = DateTime.UtcNow
         };

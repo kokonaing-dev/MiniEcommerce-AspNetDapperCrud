@@ -17,7 +17,7 @@ public class ProductRepository : IProductRepository
     public async Task<IEnumerable<ProductDto>> GetAllAsync()
     {
         var sql = @"
-        SELECT p.Id, p.Name, p.Description, p.Price, p.ImageUrl, 
+        SELECT p.Id, p.Name, p.Description, p.Price, 
                p.CategoryId, c.Name AS CategoryName, 
                p.CreatedDate AS Created
         FROM Product p
@@ -31,7 +31,7 @@ public class ProductRepository : IProductRepository
     public async Task<ProductDto?> GetByIdAsync(int id)
     {
         var sql = @"
-        SELECT p.Id, p.Name, p.Description, p.Price, p.ImageUrl, 
+        SELECT p.Id, p.Name, p.Description, p.Price,
                p.CategoryId, c.Name AS CategoryName, 
                p.CreatedDate AS Created,
                p.UpdatedDate AS Updated
@@ -49,8 +49,8 @@ public class ProductRepository : IProductRepository
         product.IsDeleted = false;
 
         var sql = @"
-        INSERT INTO Product (Name, Description, Price, ImageUrl, CategoryId, CreatedDate, IsDeleted)
-        VALUES (@Name, @Description, @Price, @ImageUrl, @CategoryId, @CreatedDate, @IsDeleted);
+        INSERT INTO Product (Name, Description, Price, CategoryId, CreatedDate, IsDeleted)
+        VALUES (@Name, @Description, @Price, @CategoryId, @CreatedDate, @IsDeleted);
     ";
 
         using var connection = _context.CreateConnection();
@@ -68,7 +68,6 @@ public class ProductRepository : IProductRepository
         SET Name = @Name,
             Description = @Description,
             Price = @Price,
-            ImageUrl = @ImageUrl,
             CategoryId = @CategoryId,
             UpdatedDate = @UpdatedDate
         WHERE Id = @Id AND IsDeleted = 0";
