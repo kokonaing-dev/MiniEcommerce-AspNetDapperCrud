@@ -8,10 +8,16 @@
     </a>
 </div>
 
+@{
+    int sn = 1;
+}
+
 <table class="table table-bordered mt-3">
     <thead>
         <tr>
+            <th>SN</th>
             <th>Name</th>
+            <th>Created</th>
             <th style="width:150px;">Action</th>
         </tr>
     </thead>
@@ -19,7 +25,9 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>@sn</td>
                 <td>@item.Name</td>
+                <td>@item.CreatedDate.ToString("yyyy-MM-dd HH:mm")</td>
                 <td>
                     <a class="btn btn-outline-primary btn-sm" href="/Category/Details/@item.Id" title="Details">
                         <i class="bi bi-eye"></i>
@@ -34,6 +42,7 @@
                     </a>
                 </td>
             </tr>
+            sn++;
         }
     </tbody>
 </table>
